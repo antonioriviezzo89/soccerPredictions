@@ -1,0 +1,46 @@
+
+.default-span{
+  padding: 2px;
+  border-radius: 5px;
+  text-align: center;
+  background-color:''; 
+  color: '';
+}
+
+.span-of-interest{
+  padding: 3px 6px 3px 6px; 
+  border-radius: 5px;
+  text-align: center;
+  background-color: #6ec007; 
+  color: white;
+}
+
+.span-of-med-interest{
+  padding: 3px 6px 3px 6px; 
+  border-radius: 5px;
+  text-align: center;
+  background-color: #F7A400; 
+  color: black;
+}
+
+table {
+  font-family: arial, sans-serif;
+  font-size: small;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid black;
+  text-align: center;
+  padding-right: 4px;
+  padding-left: 4px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  width: fit-content;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}

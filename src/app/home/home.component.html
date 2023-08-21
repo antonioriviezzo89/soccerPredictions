@@ -1,0 +1,157 @@
+<!-- div hidden da non cancellare perche fonte dei dati-->
+<div #standing id="standing_div" style="display: none;"></div>
+<div #match id="match_div" style="display: none;"></div>
+
+<div style="display: flex; justify-content: space-between; padding-top: 2%; padding-right: 2%; padding-left: 2%;">
+
+    <div style="width: 60%; padding-right: 2%;">
+
+        <select [(ngModel)]="currentLeague" (change)="changeLeague()"
+            style="width: 96.5%; padding: 5px; border-radius: 5px; font-size: medium;">
+            <option *ngFor="let itemLeague of leagueList | keyvalue" [value]="itemLeague.key"
+                style="width: 100%; padding: 5px; border-radius: 5px; font-size: medium;">
+                {{itemLeague.value}}
+            </option>
+        </select>
+    </div>
+
+    <div style="width: 20%;">
+
+        <select [(ngModel)]="currentMatchDay" (change)="changeDayOfLeague()"
+            style="width: 96.5%; padding: 5px; border-radius: 5px; font-size: medium;">
+            <option *ngFor="let itemDay of leaguesDays" [value]="itemDay"
+                style="width: 100%; padding: 5px; border-radius: 5px; font-size: medium;">
+                {{itemDay +1}}° giornata
+            </option>
+        </select>
+    </div>
+
+    <a mat-raised-button href="assets/manuale.pdf" target="_blank"
+        style=" background-color: lightgrey; color: black;">Documento formula</a>
+</div>
+
+
+<div style="display: flex; justify-content: center;">
+    <div style="padding: 2%; width: 60%;">
+        <div style="padding-bottom: 1%; padding-left: 1%; font-size: medium;">
+            {{leagueList.get(currentLeague)}}
+        </div>
+
+        <table class="mat-elevation-z8">
+            <tr>
+                <th colspan="8">Total</th>
+                <th colspan="6">Home</th>
+                <th colspan="6">Away</th>
+                <th colspan="2"></th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>Team</th>
+                <th>G</th>
+                <th>W</th>
+                <th>D</th>
+                <th>L</th>
+                <th>GF</th>
+                <th>GS</th>
+
+                <th>G</th>
+                <th>W</th>
+                <th>D</th>
+                <th>L</th>
+                <th>GF</th>
+                <th>GS</th>
+
+                <th>G</th>
+                <th>W</th>
+                <th>D</th>
+                <th>L</th>
+                <th>GF</th>
+                <th>GS</th>
+
+                <th>P</th>
+                <th>GD</th>
+            </tr>
+            <tbody>
+                <tr *ngFor="let item of standingStats">
+                    <td>{{item.position}}</td>
+                    <td style="text-align: left; vertical-align: middle;">
+                        <img style="width: 16px; height: 16px; margin-right: 10px;"
+                            src="https://secure.cache.images.core.optasports.com/soccer/teams/30x30/{{item.id}}.png" />
+                        <span>{{item.name}}</span>
+                    </td>
+                    <td>{{item.totalMp}}</td>
+                    <td>{{item.totalWon}}</td>
+                    <td>{{item.totalDraw}}</td>
+                    <td>{{item.totalLost}}</td>
+                    <td>{{item.totalGoalF}}</td>
+                    <td>{{item.totalGoalS}}</td>
+                    <td>{{item.homeMp}}</td>
+                    <td>{{item.homeWon}}</td>
+                    <td>{{item.homeDraw}}</td>
+                    <td>{{item.homeLost}}</td>
+                    <td>{{item.homeGoalF}}</td>
+                    <td>{{item.homeGoalS}}</td>
+                    <td>{{item.awayMp}}</td>
+                    <td>{{item.awayWon}}</td>
+                    <td>{{item.awayDraw}}</td>
+                    <td>{{item.awayLost}}</td>
+                    <td>{{item.awayGoalF}}</td>
+                    <td>{{item.awayGoalS}}</td>
+                    <td>{{item.points}}</td>
+                    <td>{{item.goalDifference}}</td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="padding: 2%; width: 40%;">
+        <table class="mat-elevation-z8">
+            <tbody>
+                <tr *ngFor="let m of matchDayList">
+                    <td style="padding: 2%;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>{{m.matchTime*1000 | date:'dd-MM-yyyy HH:mm'}}</span>
+                            <div>Stats:
+                                <span [ngClass]="{'span-of-interest': m.stat_1 > 0.5,
+                                                  'span-of-med-interest': (m.stat_1 <= 0.50 && m.stat_1 > 0.40)
+                                                }">
+                                    1 (<b>{{m.stat_1}}</b>)</span>&nbsp;&nbsp;
+                                <span [ngClass]="{'span-of-interest': m.stat_x > 0.5,
+                                                  'span-of-med-interest': m.stat_x <= 0.50 && m.stat_x > 0.40
+                                                }">
+                                    x (<b>{{m.stat_x}}</b>)</span> &nbsp;&nbsp;
+                                <span [ngClass]="{'span-of-interest': m.stat_2 > 0.5,
+                                                  'span-of-med-interest': m.stat_2 <= 0.50 && m.stat_2 > 0.40
+                                                }">
+                                    2 (<b>{{m.stat_2}}</b>)</span>
+                            </div>
+
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding-top: 1%;">
+                            <span>
+                                <img style="width: 15px; height: 15px; margin-right: 2px;"
+                                    src="https://secure.cache.images.core.optasports.com/soccer/teams/30x30/{{m.homeTeamId}}.png" />
+                                {{m.homeTeamName}}&nbsp;&nbsp;
+                                {{m.matchRes? m.matchRes : ' - '}}&nbsp;&nbsp;
+                                {{m.awayTeamName}}
+                                <img style="width: 15px; height: 15px; margin-left: 2px;"
+                                    src="https://secure.cache.images.core.optasports.com/soccer/teams/30x30/{{m.awayTeamId}}.png" />
+                            </span>
+                            <div>
+                                <span>Pred: <b>{{m.predFixed}}</b></span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <span [ngClass]="{'span-of-interest': m.pred_gg_ng > 2.3,
+                                    'span-of-med-interest': m.pred_gg_ng <= 2.29 && m.pred_gg_ng > 1.85
+                                  }">
+                                    <b>{{m.pred_gg_ng >= 1.5 ? ('gol ('+ m.pred_gg_ng +')') :  ('no gol ('+ m.pred_gg_ng +')')}}</b></span>
+                            </div>
+
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+</div>
