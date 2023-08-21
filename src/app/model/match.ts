@@ -1,3 +1,4 @@
+//inteface for Match obj
 export interface Match {
     matchTime?: number;
     homeTeamId?: number;
