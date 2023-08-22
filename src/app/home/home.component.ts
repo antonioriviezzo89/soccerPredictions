@@ -274,7 +274,7 @@ export class HomeComponent implements OnInit {
   getGgNgPrediction(ht: Team, at: Team) {
 
     var calcolo = ((ht.homeGoalF / ht.homeMp) + (at.awayGoalF / at.awayMp)) / 2;
-    return calcolo;
+    return Number(calcolo.toFixed(2));
 
   }
 
