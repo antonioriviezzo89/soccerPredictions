@@ -16,15 +16,24 @@ export class HomeComponent implements OnInit {
   @ViewChild('match') match!: ElementRef;
   standingStats: Array<Team> = [];
   matchDayList: Array<Match> = [];
-  leagueList: Map<string,string>;
+  //leagueList: Map<string,string>;
+  leagueList: Array<any> = [];
   currentLeague: string;
+  currentLeagueLabel: string;
 
   leaguesDays: number[];
   currentMatchDay: number;
 
   constructor(private soccerDataService: SoccerDataService) {
-    this.leagueList = leagueList;
+    
+    Array.from(leagueList.keys()).forEach(element => {
+      this.leagueList.push({id: element, label: leagueList.get(element)})
+    });
+
+    
+    this.leagueList = this.leagueList.sort((a,b) => a.label - b.label);
     this.currentLeague = "23709_77308_13";
+    this.currentLeagueLabel = leagueList.get(this.currentLeague);
     this.leaguesDays = [];
     this.currentMatchDay = 0;
   }
@@ -62,6 +71,7 @@ export class HomeComponent implements OnInit {
     var seasonId = this.currentLeague.split("_")[0];
     var roundId = this.currentLeague.split("_")[1];
     var competionId = this.currentLeague.split("_")[2];
+    this.currentLeagueLabel = leagueList.get(this.currentLeague);
 
     this.soccerDataService.getSoccerStanding(seasonId, roundId, competionId).subscribe((data) => {
       this.stand.nativeElement.innerHTML = data.commands[0].parameters.content;

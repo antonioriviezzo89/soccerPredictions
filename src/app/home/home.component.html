@@ -8,9 +8,9 @@
 
         <select [(ngModel)]="currentLeague" (change)="changeLeague()"
             style="width: 96.5%; padding: 5px; border-radius: 5px; font-size: medium;">
-            <option *ngFor="let itemLeague of leagueList | keyvalue" [value]="itemLeague.key"
+            <option *ngFor="let itemLeague of leagueList" [value]="itemLeague.id"
                 style="width: 100%; padding: 5px; border-radius: 5px; font-size: medium;">
-                {{itemLeague.value}}
+                {{itemLeague.label}}
             </option>
         </select>
     </div>
@@ -34,7 +34,7 @@
 <div style="display: flex; justify-content: center;">
     <div style="padding: 2%; width: 60%;">
         <div style="padding-bottom: 1%; padding-left: 1%; font-size: medium;">
-            {{leagueList.get(currentLeague)}}
+            {{currentLeagueLabel}}
         </div>
 
         <table class="mat-elevation-z8">
